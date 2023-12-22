@@ -10,10 +10,32 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        Product product1 = new Product(1, null, "ООО Источник", -200);
+        List<Product> products = getProductList();
 
-        Product product3 = new Product(3, "Бутылка с молоком", 250);
+        System.out.println(getAllProductsInfo(products));
 
+        VendingMachine machine = new VendingMachine(products);
+
+        Chocolate chocolateResult = (Chocolate) machine.getProductByName("Alpen Gold");
+        if (chocolateResult != null) {
+            System.out.println("Вы купили:\n");
+            System.out.println(chocolateResult.printInfo());
+        } else {
+            System.out.println("Такого товара нет в автомате.");
+        }
+
+
+        BottleOfMilk bottleOfMilkResult = machine.getBottleOfMilk(3.5);
+        if (bottleOfMilkResult != null){
+            System.out.println("Вы купили:");
+            System.out.println(bottleOfMilkResult.displayInfo());
+        }
+        else {
+            System.out.println("Такого товара нет в автомате.");
+        }
+    }
+
+    private static List<Product> getProductList() {
         Product bottleOfWater1 =
                 new BottleOfWater(2, "Вода #1", "ООО Источник", 250, 0.5);
 
@@ -44,28 +66,7 @@ public class Main {
         products.add(Chocolate1);
         products.add(Chocolate2);
         products.add(Chocolate3);
-
-        System.out.println(getAllProductsInfo(products));
-
-        VendingMachine machine = new VendingMachine(products);
-
-        Chocolate chocolateResult = (Chocolate) machine.getProductByName("Alpen Gold");
-        if (chocolateResult != null) {
-            System.out.println("Вы купили:\n");
-            System.out.println(chocolateResult.printInfo());
-        } else {
-            System.out.println("Такого товара нет в автомате.");
-        }
-
-//
-//        BottleOfMilk bottleOfMilkResult = machine.getBottleOfMilk(3.5);
-//        if (bottleOfMilkResult != null){
-//            System.out.println("Вы купили:");
-//            System.out.println(bottleOfMilkResult.displayInfo());
-//        }
-//        else {
-//            System.out.println("Такого товара нет в автомате.");
-//        }
+        return products;
     }
 
     public static String getAllProductsInfo(List<Product> listOfProducts) {
